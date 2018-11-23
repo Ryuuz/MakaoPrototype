@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour {
     private Vector3 direction;
     private Vector2 rotation;
     private Rigidbody physicsBody = null;
+    private bool hasMap = false;
+    private bool paused = false;
 
 	// Use this for initialization
 	void Start () {
