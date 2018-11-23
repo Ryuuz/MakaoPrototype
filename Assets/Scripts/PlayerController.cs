@@ -18,7 +18,13 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
+        if(hasMap)
+        {
+            if(Input.GetKey("Map"))
+            {
+
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -33,5 +39,25 @@ public class PlayerController : MonoBehaviour {
         direction.y = physicsBody.velocity.y;
         
         physicsBody.velocity = direction;
+    }
+
+    public void SetMapStatus(bool status)
+    {
+        hasMap = status;
+    }
+
+    public void ToggleMap()
+    {
+
+    }
+
+    private void PauseGame()
+    {
+        paused = true;
+    }
+
+    private void UnpauseGame()
+    {
+        paused = false;
     }
 }
