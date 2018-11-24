@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\BillboardScript.cs" />
+    <Compile Include="Assets\Scripts\MapScript.cs" />
     <Compile Include="Assets\Scripts\NextPoint.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\TeleportingScript.cs" />

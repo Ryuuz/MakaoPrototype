@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
     public float walkSpeed = 300.0f;
-    public float turnSpeed = 0.5f;
+    public float turnSpeed = 2.0f;
     private Vector3 direction;
     private Vector2 rotation;
     private Rigidbody physicsBody = null;
@@ -14,15 +14,22 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         physicsBody = gameObject.GetComponent<Rigidbody>();
+        rotation.x = gameObject.transform.rotation.eulerAngles.y;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if(hasMap)
+        if(hasMap && Input.GetButtonDown("Map"))
         {
-            if(Input.GetKey("Map"))
+            if(paused)
             {
-
+                gameObject.GetComponentInChildren<UIScript>().Hide();
+                UnpauseGame();
+            }
+            else
+            {
+                PauseGame();
+                gameObject.GetComponentInChildren<UIScript>().Show();
             }
         }
     }
@@ -41,9 +48,14 @@ public class PlayerController : MonoBehaviour {
         physicsBody.velocity = direction;
     }
 
-    public void SetMapStatus(bool status)
+    public void GiveMap()
     {
-        hasMap = status;
+        if(hasMap == false)
+        {
+            hasMap = true;
+            PauseGame();
+            gameObject.GetComponentInChildren<UIScript>().Show();
+        }
     }
 
     public void ToggleMap()
@@ -54,10 +66,12 @@ public class PlayerController : MonoBehaviour {
     private void PauseGame()
     {
         paused = true;
+        Time.timeScale = 0.0f;
     }
 
     private void UnpauseGame()
     {
         paused = false;
+        Time.timeScale = 1.0f;
     }
 }
