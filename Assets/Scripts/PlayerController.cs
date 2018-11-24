@@ -7,7 +7,10 @@ public class PlayerController : MonoBehaviour {
     public float turnSpeed = 2.0f;
     private Vector3 direction;
     private Vector2 rotation;
+
     private Rigidbody physicsBody = null;
+    private GameObject map = null;
+
     private bool hasMap = false;
     private bool paused = false;
 
@@ -15,22 +18,19 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
         physicsBody = gameObject.GetComponent<Rigidbody>();
         rotation.x = gameObject.transform.rotation.eulerAngles.y;
+        map = gameObject.transform.Find("MapInterface").gameObject;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if(hasMap && Input.GetButtonDown("Map"))
         {
-            if(paused)
-            {
-                gameObject.GetComponentInChildren<UIScript>().Hide();
-                UnpauseGame();
-            }
-            else
-            {
-                PauseGame();
-                gameObject.GetComponentInChildren<UIScript>().Show();
-            }
+            ToggleMap();
+        }
+
+        if(gameObject.transform.position.y < -5.0f)
+        {
+            gameObject.transform.position = new Vector3(20.0f, 1.5f, 20.0f);
         }
     }
 
@@ -54,13 +54,22 @@ public class PlayerController : MonoBehaviour {
         {
             hasMap = true;
             PauseGame();
-            gameObject.GetComponentInChildren<UIScript>().Show();
+            map.GetComponent<UIScript>().Show();
         }
     }
 
     public void ToggleMap()
     {
-
+        if (paused)
+        {
+            map.GetComponent<UIScript>().Hide();
+            UnpauseGame();
+        }
+        else
+        {
+            PauseGame();
+            map.GetComponent<UIScript>().Show();
+        }
     }
 
     private void PauseGame()
